@@ -413,3 +413,192 @@ if page == "🏠 Executive Overview":
         st.info(
             f"Average Order Value : **₹ {average_order_value:,.2f}**"
         )
+
+# ==========================================================
+# PART 3A : SALES ANALYTICS
+# ==========================================================
+
+if page == "📈 Sales Analytics":
+
+    st.header("📈 Sales Analytics")
+    st.caption("Analyze retail sales performance over time.")
+
+    st.markdown("---")
+
+    # ==========================
+    # KPI Calculations
+    # ==========================
+
+    total_transactions = len(df)
+    total_quantity = int(df["Quantity"].sum())
+    highest_sale = df["Revenue"].max()
+    average_sale = df["Revenue"].mean()
+
+    st.markdown("""
+    <style>
+
+    .card{
+        background: linear-gradient(135deg,#2563EB,#60A5FA);
+        color:white;
+        border-radius:15px;
+        padding:20px;
+        text-align:center;
+        box-shadow:0px 5px 15px rgba(0,0,0,0.2);
+        margin-bottom:10px;
+    }
+
+    .card h4{
+        margin:0;
+        font-size:18px;
+    }
+
+    .card h2{
+        margin-top:10px;
+        font-weight:bold;
+    }
+
+    </style>
+    """, unsafe_allow_html=True)
+
+    c1,c2,c3,c4=st.columns(4)
+
+    with c1:
+
+        st.markdown(f"""
+        <div class="card">
+        <h4>🧾 Transactions</h4>
+        <h2>{total_transactions:,}</h2>
+        </div>
+        """,unsafe_allow_html=True)
+
+    with c2:
+
+        st.markdown(f"""
+        <div class="card">
+        <h4>📦 Units Sold</h4>
+        <h2>{total_quantity:,}</h2>
+        </div>
+        """,unsafe_allow_html=True)
+
+    with c3:
+
+        st.markdown(f"""
+        <div class="card">
+        <h4>💰 Highest Sale</h4>
+        <h2>₹ {highest_sale:,.2f}</h2>
+        </div>
+        """,unsafe_allow_html=True)
+
+    with c4:
+
+        st.markdown(f"""
+        <div class="card">
+        <h4>🛒 Average Sale</h4>
+        <h2>₹ {average_sale:,.2f}</h2>
+        </div>
+        """,unsafe_allow_html=True)
+
+    st.markdown("---")
+    left,right=st.columns(2)
+
+    with left:
+
+        st.subheader("📅 Monthly Revenue Trend")
+
+        fig_month = px.line(
+
+            monthly_sales,
+
+            x="InvoiceDate",
+
+            y="Revenue",
+
+            markers=True,
+
+            title="Monthly Revenue"
+
+        )
+
+        fig_month.update_traces(
+
+            line_color="#2563EB",
+
+            line_width=4
+
+        )
+
+        fig_month.update_layout(
+
+            template="plotly_white",
+
+            height=450,
+
+            hovermode="x unified",
+
+            title_x=0.3,
+
+            xaxis_title="Month",
+
+            yaxis_title="Revenue"
+
+        )
+
+        st.plotly_chart(
+
+            fig_month,
+
+            use_container_width=True
+
+        )
+    with right:
+
+        st.subheader("📆 Daily Revenue Trend")
+
+        fig_day = px.line(
+
+            daily_sales,
+
+            x="Date",
+
+            y="Revenue"
+
+        )
+
+        fig_day.update_traces(
+
+            line_color="#10B981",
+
+            line_width=3
+
+        )
+
+        fig_day.update_layout(
+
+            template="plotly_white",
+
+            height=450,
+
+            hovermode="x unified",
+
+            title="Daily Revenue",
+
+            title_x=0.35,
+
+            xaxis_title="Date",
+
+            yaxis_title="Revenue"
+
+        )
+
+        st.plotly_chart(
+
+            fig_day,
+
+            use_container_width=True
+
+        )
+    st.markdown("---")
+
+    st.info(
+        "📊 These trends help identify seasonal demand patterns and overall business performance."
+    )
