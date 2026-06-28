@@ -602,3 +602,142 @@ if page == "📈 Sales Analytics":
     st.info(
         "📊 These trends help identify seasonal demand patterns and overall business performance."
     )
+
+    # ==========================================================
+    # COUNTRY & PRODUCT ANALYSIS
+    # ==========================================================
+
+    st.markdown("---")
+
+    left, right = st.columns(2)
+
+    with left:
+
+        st.subheader("🌍 Revenue by Country")
+
+        top_country = country_sales.head(10)
+
+        fig_country = px.bar(
+
+            top_country,
+
+            x="Country",
+
+            y="Revenue",
+
+            color="Revenue",
+
+            color_continuous_scale="Blues",
+
+            text_auto=".2s"
+
+        )
+
+        fig_country.update_layout(
+
+            template="plotly_white",
+
+            height=450,
+
+            title="Top 10 Countries",
+
+            title_x=0.30,
+
+            xaxis_title="Country",
+
+            yaxis_title="Revenue",
+
+            coloraxis_showscale=False
+
+        )
+
+        st.plotly_chart(
+
+            fig_country,
+
+            use_container_width=True
+
+        )
+
+    with right:
+
+        st.subheader("🏆 Top Selling Products")
+
+        fig_products = px.bar(
+
+            product_sales,
+
+            x="Revenue",
+
+            y="Description",
+
+            orientation="h",
+
+            color="Revenue",
+
+            color_continuous_scale="Oranges",
+
+            text_auto=".2s"
+
+        )
+
+        fig_products.update_layout(
+
+            template="plotly_white",
+
+            height=450,
+
+            title="Top 10 Products",
+
+            title_x=0.30,
+
+            xaxis_title="Revenue",
+
+            yaxis_title="",
+
+            coloraxis_showscale=False,
+
+            yaxis=dict(
+
+                categoryorder="total ascending"
+
+            )
+
+        )
+
+        st.plotly_chart(
+
+            fig_products,
+
+            use_container_width=True
+
+        )
+
+    st.markdown("---")
+
+    st.subheader("📌 Sales Insights")
+
+    c1, c2 = st.columns(2)
+
+    highest_country = country_sales.iloc[0]["Country"]
+    highest_product = product_sales.iloc[0]["Description"]
+
+    with c1:
+
+        st.success(
+            f"🌍 Highest Revenue Country : {highest_country}"
+        )
+
+        st.info(
+            f"💰 Total Revenue : ₹ {total_revenue:,.2f}"
+        )
+
+    with c2:
+
+        st.success(
+            f"🏆 Best Selling Product : {highest_product}"
+        )
+
+        st.info(
+            f"📦 Total Units Sold : {total_quantity:,}"
+        )
