@@ -241,3 +241,184 @@ average_order_value = total_revenue / total_orders
 # ==========================================================
 # End of Part 1
 # ==========================================================
+
+# ==========================================================
+# PART 2 : EXECUTIVE OVERVIEW DASHBOARD
+# ==========================================================
+
+if page == "🏠 Executive Overview":
+
+    st.header("🚀 Executive Overview")
+
+    st.write(
+        "A quick overview of the retail business performance based on the cleaned dataset."
+    )
+
+    st.markdown("---")
+
+    # ===========================
+    # KPI Cards
+    # ===========================
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1.metric(
+        "💰 Total Revenue",
+        f"₹ {total_revenue:,.2f}"
+    )
+
+    col2.metric(
+        "🧾 Total Orders",
+        f"{total_orders:,}"
+    )
+
+    col3.metric(
+        "👥 Total Customers",
+        f"{total_customers:,}"
+    )
+
+    col4.metric(
+        "🛒 Avg Order Value",
+        f"₹ {average_order_value:,.2f}"
+    )
+
+    st.markdown("---")
+
+    # ===========================
+    # Revenue by Country
+    # ===========================
+
+    left, right = st.columns(2)
+
+    with left:
+
+        st.subheader("🌍 Revenue by Country")
+
+        top_country = country_sales.head(10)
+
+        fig_country = px.bar(
+            top_country,
+            x="Country",
+            y="Revenue",
+            color="Revenue",
+            text_auto=".2s",
+            title="Top 10 Countries"
+        )
+
+        fig_country.update_layout(
+            height=450,
+            xaxis_title="Country",
+            yaxis_title="Revenue"
+        )
+
+        st.plotly_chart(
+            fig_country,
+            use_container_width=True
+        )
+
+    # ===========================
+    # Monthly Revenue Trend
+    # ===========================
+
+    with right:
+
+        st.subheader("📈 Monthly Revenue Trend")
+
+        fig_month = px.line(
+            monthly_sales,
+            x="InvoiceDate",
+            y="Revenue",
+            markers=True,
+            title="Monthly Revenue"
+        )
+
+        fig_month.update_layout(
+            height=450,
+            xaxis_title="Month",
+            yaxis_title="Revenue"
+        )
+
+        st.plotly_chart(
+            fig_month,
+            use_container_width=True
+        )
+
+    st.markdown("---")
+
+    # ===========================
+    # Top Products
+    # ===========================
+
+    left, right = st.columns(2)
+
+    with left:
+
+        st.subheader("🏆 Top Selling Products")
+
+        fig_products = px.bar(
+            product_sales,
+            x="Revenue",
+            y="Description",
+            orientation="h",
+            color="Revenue",
+            text_auto=".2s"
+        )
+
+        fig_products.update_layout(
+            height=450,
+            yaxis=dict(categoryorder="total ascending")
+        )
+
+        st.plotly_chart(
+            fig_products,
+            use_container_width=True
+        )
+
+    # ===========================
+    # Revenue Distribution
+    # ===========================
+
+    with right:
+
+        st.subheader("💰 Revenue Distribution")
+
+        fig_hist = px.histogram(
+            df,
+            x="Revenue",
+            nbins=60,
+            title="Revenue Distribution"
+        )
+
+        fig_hist.update_layout(
+            height=450
+        )
+
+        st.plotly_chart(
+            fig_hist,
+            use_container_width=True
+        )
+
+    st.markdown("---")
+
+    # ===========================
+    # Business Summary
+    # ===========================
+
+    st.subheader("📌 Business Summary")
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.info(
+            f"Highest Revenue Country : **{country_sales.iloc[0]['Country']}**"
+        )
+
+    with c2:
+        st.info(
+            f"Top Product : **{product_sales.iloc[0]['Description']}**"
+        )
+
+    with c3:
+        st.info(
+            f"Average Order Value : **₹ {average_order_value:,.2f}**"
+        )
