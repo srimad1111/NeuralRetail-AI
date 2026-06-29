@@ -783,3 +783,72 @@ if page == "👥 Customer Hub":
         "Monetary"
 
     ]
+
+    # ==========================================================
+    # STANDARDIZE DATA
+    # ==========================================================
+
+    scaler = StandardScaler()
+
+    scaled_rfm = scaler.fit_transform(rfm)
+
+    # ==========================================================
+    # KMEANS
+    # ==========================================================
+
+    kmeans = KMeans(
+
+        n_clusters=4,
+
+        random_state=42,
+
+        n_init=10
+
+    )
+
+    rfm["Cluster"] = kmeans.fit_predict(
+        scaled_rfm
+    )
+
+    cluster_names = {
+
+        0: "Champions",
+
+        1: "Loyal",
+
+        2: "At Risk",
+
+        3: "Hibernating"
+
+    }
+
+    rfm["Segment"] = rfm["Cluster"].map(
+        cluster_names
+    )
+
+
+    st.subheader("📊 Customer KPIs")
+
+    c1,c2,c3,c4=st.columns(4)
+
+    c1.metric(
+        "Customers",
+        len(rfm)
+    )
+
+    c2.metric(
+        "Average Recency",
+        round(rfm["Recency"].mean(),1)
+    )
+
+    c3.metric(
+        "Average Frequency",
+        round(rfm["Frequency"].mean(),1)
+    )
+
+    c4.metric(
+        "Average Monetary",
+        f"₹ {rfm['Monetary'].mean():,.2f}"
+    )
+
+    st.markdown("---")
