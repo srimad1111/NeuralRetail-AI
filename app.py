@@ -904,3 +904,67 @@ if page == "👥 Customer Hub":
             use_container_width=True
 
         )
+
+    with right:
+
+        fig_scatter = px.scatter(
+
+            rfm,
+
+            x="Recency",
+
+            y="Monetary",
+
+            color="Segment",
+
+            size="Frequency",
+
+            hover_data=["Frequency"]
+
+        )
+
+        fig_scatter.update_layout(
+
+            title="Customer Distribution",
+
+            template="plotly_white",
+
+            height=450
+
+        )
+
+        st.plotly_chart(
+
+            fig_scatter,
+
+            use_container_width=True
+
+        )
+
+    st.markdown("---")
+
+    st.subheader("🏆 Top 10 Valuable Customers")
+
+    top_customers = (
+
+        rfm
+
+        .sort_values(
+
+            "Monetary",
+
+            ascending=False
+
+        )
+
+        .head(10)
+
+    )
+
+    st.dataframe(
+
+        top_customers,
+
+        use_container_width=True
+
+    )
