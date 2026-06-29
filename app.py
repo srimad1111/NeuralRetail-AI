@@ -741,3 +741,45 @@ if page == "📈 Sales Analytics":
         st.info(
             f"📦 Total Units Sold : {total_quantity:,}"
         )
+
+
+# ==========================================================
+# PART 4 : CUSTOMER HUB
+# ==========================================================
+
+if page == "👥 Customer Hub":
+
+    st.header("👥 Customer Hub")
+
+    st.caption(
+        "Customer Segmentation using RFM Analysis and K-Means Clustering"
+    )
+
+    st.markdown("---")
+
+    # ==========================================================
+    # RFM FEATURE ENGINEERING
+    # ==========================================================
+
+    snapshot_date = df["InvoiceDate"].max() + pd.Timedelta(days=1)
+
+    rfm = df.groupby("Customer ID").agg({
+
+        "InvoiceDate": lambda x:
+            (snapshot_date - x.max()).days,
+
+        "Invoice": "nunique",
+
+        "Revenue": "sum"
+
+    })
+
+    rfm.columns = [
+
+        "Recency",
+
+        "Frequency",
+
+        "Monetary"
+
+    ]
