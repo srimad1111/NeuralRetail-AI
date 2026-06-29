@@ -851,4 +851,56 @@ if page == "👥 Customer Hub":
         f"₹ {rfm['Monetary'].mean():,.2f}"
     )
 
-    st.markdown("---")
+    st.markdown("---")\
+    
+    left,right=st.columns(2)
+
+    with left:
+
+        segment_count = (
+
+            rfm["Segment"]
+
+            .value_counts()
+
+            .reset_index()
+
+        )
+
+        segment_count.columns=[
+
+            "Segment",
+
+            "Customers"
+
+        ]
+
+        fig_pie = px.pie(
+
+            segment_count,
+
+            names="Segment",
+
+            values="Customers",
+
+            hole=0.5,
+
+            color_discrete_sequence=px.colors.qualitative.Set2
+
+        )
+
+        fig_pie.update_layout(
+
+            title="Customer Segments",
+
+            height=450
+
+        )
+
+        st.plotly_chart(
+
+            fig_pie,
+
+            use_container_width=True
+
+        )
