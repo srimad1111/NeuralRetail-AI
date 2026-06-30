@@ -16,9 +16,8 @@ from prophet import Prophet
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
-# ==========================================================
-# Streamlit Configuration
-# ==========================================================
+
+# Streamlit Config
 
 st.set_page_config(
     page_title="NeuralRetail AI",
@@ -27,9 +26,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ==========================================================
+
 # Title
-# ==========================================================
+
 
 st.title("🛒 NeuralRetail AI Sales Intelligence Platform")
 
@@ -39,9 +38,9 @@ st.caption(
 
 st.markdown("---")
 
-# ==========================================================
+
 # Sidebar
-# ==========================================================
+
 
 st.sidebar.title("🛒 NeuralRetail")
 
@@ -99,9 +98,9 @@ st.sidebar.markdown("---")
 
 st.sidebar.caption("Version 1.0")
 
-# ==========================================================
+
 # Load Dataset
-# ==========================================================
+
 
 @st.cache_data
 def load_data():
@@ -116,9 +115,9 @@ def load_data():
 
 df = load_data()
 
-# ==========================================================
+
 # Data Cleaning
-# ==========================================================
+
 
 df = df.dropna(subset=["Customer ID"])
 
@@ -143,9 +142,9 @@ df["Revenue"] = (
     df["Price"]
 )
 
-# ==========================================================
+
 # Helper DataFrames
-# ==========================================================
+
 
 monthly_sales = (
 
@@ -217,9 +216,9 @@ daily_sales.columns = [
 
 ]
 
-# ==========================================================
+
 # Executive KPIs
-# ==========================================================
+
 
 total_revenue = df["Revenue"].sum()
 
@@ -229,13 +228,13 @@ total_customers = df["Customer ID"].nunique()
 
 average_order_value = total_revenue / total_orders
 
-# ==========================================================
-# End of Part 1
-# ==========================================================
 
-# ==========================================================
+# End of Part 1
+
+
+
 # PART 2 : EXECUTIVE OVERVIEW DASHBOARD
-# ==========================================================
+
 
 if page == "🏠 Executive Overview":
 
@@ -247,9 +246,9 @@ if page == "🏠 Executive Overview":
 
     st.markdown("---")
 
-    # ===========================
+
     # KPI Cards
-    # ===========================
+
 
     col1, col2, col3, col4 = st.columns(4)
 
@@ -275,9 +274,9 @@ if page == "🏠 Executive Overview":
 
     st.markdown("---")
 
-    # ===========================
+
     # Revenue by Country
-    # ===========================
+
 
     left, right = st.columns(2)
 
@@ -303,13 +302,8 @@ if page == "🏠 Executive Overview":
         )
 
         st.plotly_chart(
-            fig_country,
-            use_container_width=True
+            fig_country
         )
-
-    # ===========================
-    # Monthly Revenue Trend
-    # ===========================
 
     with right:
 
@@ -336,9 +330,9 @@ if page == "🏠 Executive Overview":
 
     st.markdown("---")
 
-    # ===========================
+
     # Top Products
-    # ===========================
+
 
     left, right = st.columns(2)
 
@@ -365,9 +359,9 @@ if page == "🏠 Executive Overview":
             use_container_width=True
         )
 
-    # ===========================
+
     # Revenue Distribution
-    # ===========================
+
 
     with right:
 
@@ -391,9 +385,9 @@ if page == "🏠 Executive Overview":
 
     st.markdown("---")
 
-    # ===========================
+
     # Business Summary
-    # ===========================
+
 
     st.subheader("📌 Business Summary")
 
@@ -414,9 +408,7 @@ if page == "🏠 Executive Overview":
             f"Average Order Value : **₹ {average_order_value:,.2f}**"
         )
 
-# ==========================================================
 # PART 3A : SALES ANALYTICS
-# ==========================================================
 
 if page == "📈 Sales Analytics":
 
@@ -425,9 +417,7 @@ if page == "📈 Sales Analytics":
 
     st.markdown("---")
 
-    # ==========================
     # KPI Calculations
-    # ==========================
 
     total_transactions = len(df)
     total_quantity = int(df["Quantity"].sum())
@@ -603,9 +593,9 @@ if page == "📈 Sales Analytics":
         "📊 These trends help identify seasonal demand patterns and overall business performance."
     )
 
-    # ==========================================================
+
     # COUNTRY & PRODUCT ANALYSIS
-    # ==========================================================
+
 
     st.markdown("---")
 
@@ -757,9 +747,9 @@ if page == "👥 Customer Hub":
 
     st.markdown("---")
 
-    # ==========================================================
+
     # RFM FEATURE ENGINEERING
-    # ==========================================================
+
 
     snapshot_date = df["InvoiceDate"].max() + pd.Timedelta(days=1)
 
@@ -784,17 +774,13 @@ if page == "👥 Customer Hub":
 
     ]
 
-    # ==========================================================
     # STANDARDIZE DATA
-    # ==========================================================
 
     scaler = StandardScaler()
 
     scaled_rfm = scaler.fit_transform(rfm)
 
-    # ==========================================================
     # KMEANS
-    # ==========================================================
 
     kmeans = KMeans(
 
