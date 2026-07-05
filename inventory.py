@@ -171,3 +171,31 @@ def inventory_dashboard(df):
             f"Optimal Order Quantity = {eoq:.2f} units"
 
         )
+
+    st.markdown("---")
+
+    c1, c2, c3 = st.columns(3)
+
+    c1.metric(
+
+        "Category A",
+
+        (inventory["Category"] == "A").sum()
+
+    )
+
+    c2.metric(
+
+        "Category B",
+
+        (inventory["Category"] == "B").sum()
+
+    )
+
+    c3.metric(
+
+        "Category C",
+
+        (inventory["Category"] == "C").sum()
+
+    )
