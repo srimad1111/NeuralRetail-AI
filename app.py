@@ -1,8 +1,10 @@
 import streamlit as st
+from churn import churn_dashboard
 
 from utils import load_data, clean_data
 
 from executive import executive_dashboard
+from inventory import inventory_dashboard
 from sales import sales_dashboard
 from customer import customer_dashboard
 from forecast import forecast_dashboard
@@ -30,7 +32,9 @@ PAGES = {
     "🏠 Executive Overview": executive_dashboard,
     "📈 Sales Analytics": sales_dashboard,
     "👥 Customer Hub": customer_dashboard,
-    "🔮 Demand Explorer": forecast_dashboard
+    "🔮 Demand Explorer": forecast_dashboard,
+    "🤖 Churn Prediction": churn_dashboard,
+    "📦 Inventory Optimization": inventory_dashboard,
 }
 
 page = st.sidebar.radio(
