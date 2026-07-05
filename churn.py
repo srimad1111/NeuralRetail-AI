@@ -83,3 +83,85 @@ def churn_dashboard(df):
     )
 
     st.markdown("---")
+
+    # Features & Target
+
+    X = rfm[
+
+        [
+
+            "Recency",
+
+            "Frequency",
+
+            "Monetary"
+
+        ]
+
+    ]
+
+    y = rfm["Churn"]
+
+    scaler = StandardScaler()
+
+    X = scaler.fit_transform(X)
+
+    X_train, X_test, y_train, y_test = train_test_split(
+
+        X,
+
+        y,
+
+        test_size=0.2,
+
+        random_state=42
+
+    )
+
+    model = XGBClassifier(
+
+        random_state=42,
+
+        n_estimators=100,
+
+        max_depth=4,
+
+        learning_rate=0.1,
+
+        eval_metric="logloss"
+
+    )
+
+    model.fit(
+
+        X_train,
+
+        y_train
+
+    )
+
+    prediction = model.predict(
+
+        X_test
+
+    )
+
+    accuracy = accuracy_score(
+
+        y_test,
+
+        prediction
+
+    )
+
+    st.subheader("Model Performance")
+
+    st.metric(
+
+        "Accuracy",
+
+        f"{accuracy*100:.2f}%"
+
+    )
+
+    st.markdown("---")
