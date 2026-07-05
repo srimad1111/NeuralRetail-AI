@@ -165,3 +165,129 @@ def churn_dashboard(df):
     )
 
     st.markdown("---")
+
+    left, right = st.columns(2)
+
+    with left:
+
+        st.subheader("Confusion Matrix")
+
+        cm = confusion_matrix(
+
+            y_test,
+
+            prediction
+
+        )
+
+        cm_df = pd.DataFrame(
+
+            cm,
+
+            index=["Active","Churn"],
+
+            columns=["Active","Churn"]
+
+        )
+
+        st.dataframe(cm_df)
+
+    with right:
+
+        st.subheader("Feature Importance")
+
+        importance = pd.DataFrame({
+
+            "Feature":[
+
+                "Recency",
+
+                "Frequency",
+
+                "Monetary"
+
+            ],
+
+            "Importance":model.feature_importances_
+
+        })
+
+        fig = px.bar(
+
+            importance,
+
+            x="Feature",
+
+            y="Importance",
+
+            color="Importance"
+
+        )
+
+        st.plotly_chart(
+
+            fig,
+
+            use_container_width=True
+
+        )
+
+    st.markdown("---")
+
+    st.subheader("Customer Prediction")
+
+    recency = st.number_input(
+
+        "Recency",
+
+        min_value=0,
+
+        value=50
+
+    )
+
+    frequency = st.number_input(
+
+        "Frequency",
+
+        min_value=1,
+
+        value=10
+
+    )
+
+    monetary = st.number_input(
+
+        "Monetary",
+
+        min_value=1,
+
+        value=1000
+
+    )
+
+    if st.button("Predict"):
+
+        sample = scaler.transform([
+
+            [
+
+                recency,
+
+                frequency,
+
+                monetary
+
+            ]
+
+        ])
+
+        result = model.predict(sample)[0]
+
+        if result == 1:
+
+            st.error("⚠ Customer likely to churn.")
+
+        else:
+
+            st.success("✅ Customer likely to stay.")
