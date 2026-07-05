@@ -29,12 +29,12 @@ st.sidebar.title("🛒 NeuralRetail AI")
 st.sidebar.caption("AI Powered Retail Intelligence")
 
 PAGES = {
-    "🏠 Executive Overview": executive_dashboard,
-    "📈 Sales Analytics": sales_dashboard,
-    "👥 Customer Hub": customer_dashboard,
-    "🔮 Demand Explorer": forecast_dashboard,
-    "🤖 Churn Prediction": churn_dashboard,
-    "📦 Inventory Optimization": inventory_dashboard,
+    " Executive Overview": executive_dashboard,
+    " Sales Analytics": sales_dashboard,
+    " Customer Hub": customer_dashboard,
+    " Demand Explorer": forecast_dashboard,
+    " Churn Prediction": churn_dashboard,
+    " Inventory Optimization": inventory_dashboard,
 }
 
 page = st.sidebar.radio(
