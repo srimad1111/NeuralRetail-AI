@@ -118,3 +118,56 @@ def inventory_dashboard(df):
     )
 
     st.markdown("---")
+
+# EOQ CALCULATION
+
+    st.subheader("📦 Economic Order Quantity (EOQ)")
+
+    annual_demand = st.number_input(
+
+        "Annual Demand",
+
+        value=5000
+
+    )
+
+    ordering_cost = st.number_input(
+
+        "Ordering Cost",
+
+        value=500
+
+    )
+
+    holding_cost = st.number_input(
+
+        "Holding Cost",
+
+        value=50
+
+    )
+    if st.button("Calculate EOQ"):
+
+        eoq = (
+
+            (
+
+                2 *
+
+                annual_demand *
+
+                ordering_cost
+
+            )
+
+            /
+
+            holding_cost
+
+        ) ** 0.5
+
+        st.success(
+
+            f"Optimal Order Quantity = {eoq:.2f} units"
+
+        )
