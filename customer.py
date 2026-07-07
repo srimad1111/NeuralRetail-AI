@@ -6,6 +6,9 @@ from sklearn.preprocessing import StandardScaler
 
 from utils import create_rfm
 
+import joblib
+import os
+
 
 # Customer Dashboard
 def customer_dashboard(df):
@@ -41,7 +44,15 @@ def customer_dashboard(df):
 
     rfm["Cluster"] = kmeans.fit_predict(
         scaled_rfm
+
+    
     )
+
+    os.makedirs("models", exist_ok=True)
+
+    joblib.dump(kmeans, "models/kmeans.pkl")
+    joblib.dump(scaler, "models/scaler.pkl")
+
 
     cluster_names = {
 
@@ -234,3 +245,5 @@ def customer_dashboard(df):
         f"👥 Total Customers : {len(rfm)}"
 
     )
+
+

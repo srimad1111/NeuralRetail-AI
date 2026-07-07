@@ -10,6 +10,8 @@ from sklearn.metrics import confusion_matrix
 from sklearn.preprocessing import StandardScaler
 
 from utils import create_rfm
+import os
+import joblib
 
 
 # Churn Prediction Dashboard
@@ -153,6 +155,8 @@ def churn_dashboard(df):
         prediction
 
     )
+
+    joblib.dump(model, "models/xgboost.pkl")
 
     st.subheader("Model Performance")
 

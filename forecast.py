@@ -4,6 +4,8 @@ import plotly.express as px
 from prophet import Prophet
 
 from utils import prophet_dataset
+import joblib
+import os
 
 
 # Demand Forecasting
@@ -37,6 +39,8 @@ def forecast_dashboard(df):
     future = model.make_future_dataframe(
         periods=90
     )
+
+    joblib.dump(model, "models/prophet.pkl")
 
     forecast = model.predict(future)
 

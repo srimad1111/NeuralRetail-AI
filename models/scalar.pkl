@@ -1,4 +1,0 @@
-joblib.dump(
-    scaler,
-    "models/scaler.pkl"
-)

@@ -1,28 +1,49 @@
+import pandas as pd
+import streamlit as st
 
 
+# Load Dataset
+@st.cache_data
+def load_data():
+
+    df = pd.read_csv(
+        "online_retail_II.csv",
+        encoding="ISO-8859-1"
+    )
+
+    return df
+
+
+# Data Cleaning
 def clean_data(df):
 
-    # Remove missing Customer IDs
     df = df.dropna(subset=["Customer ID"])
 
-    # Remove cancelled invoices
     df = df[
         ~df["Invoice"].astype(str).str.startswith("C")
     ]
 
-    # Remove invalid Quantity
     df = df[
         df["Quantity"] > 0
     ]
 
-    # Remove invalid Price
     df = df[
         df["Price"] > 0
     ]
 
-    # Convert Date
-    df["InvoiceDate"] = pd.to
+    df["InvoiceDate"] = pd.to_datetime(
+        df["InvoiceDate"]
+    )
 
+    df["Revenue"] = (
+        df["Quantity"] *
+        df["Price"]
+    )
+
+    return df
+
+
+# KPI Calculation
 def calculate_kpis(df):
 
     total_revenue = df["Revenue"].sum()
@@ -42,8 +63,14 @@ def calculate_kpis(df):
 
         "Orders": total_orders,
 
-        "Cus
+        "Customers": total_customers,
 
+        "AOV": average_order_value
+
+    }
+
+
+# Monthly Sales
 def monthly_sales(df):
 
     monthly = (
@@ -62,14 +89,66 @@ def monthly_sales(df):
 
     monthly["InvoiceDate"] = (
 
-        monthly["InvoiceDa
+        monthly["InvoiceDate"]
 
+        .astype(str)
+
+    )
+
+    return monthly
+
+
+# Daily Sales
+def daily_sales(df):
+
+    daily = (
+
+        df.groupby(
+
+            df["InvoiceDate"].dt.date
+
+        )["Revenue"]
+
+        .sum()
+
+        .reset_index()
+
+    )
+
+    daily.columns = [
+
+        "Date",
+
+        "Revenue"
+
+    ]
+
+    return daily
+
+
+# Country Sales
 def country_sales(df):
 
     country = (
 
-        df.
+        df.groupby("Country")["Revenue"]
 
+        .sum()
+
+        .sort_values(
+
+            ascending=False
+
+        )
+
+        .reset_index()
+
+    )
+
+    return country
+
+
+# Product Sales
 def product_sales(df):
 
     products = (
@@ -80,8 +159,20 @@ def product_sales(df):
 
         .sort_values(
 
-            ascending=Fals
+            ascending=False
 
+        )
+
+        .head(10)
+
+        .reset_index()
+
+    )
+
+    return products
+
+
+# RFM Dataset
 def create_rfm(df):
 
     snapshot_date = (
@@ -99,14 +190,12 @@ def create_rfm(df):
         .agg({
 
             "InvoiceDate":
-
             lambda x:
-
             (snapshot_date - x.max()).days,
 
-            "Invoice":"nunique",
+            "Invoice": "nunique",
 
-            "Revenue":"sum"
+            "Revenue": "sum"
 
         })
 
@@ -126,7 +215,6 @@ def create_rfm(df):
 
 
 # Prophet Dataset
-
 def prophet_dataset(df):
 
     prophet_df = (
