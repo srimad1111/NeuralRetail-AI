@@ -1,0 +1,7 @@
+import joblib
+
+joblib.dump(
+    kmeans,
+    "models/kmeans.pkl"
+)
+

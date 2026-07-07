@@ -1,0 +1,4 @@
+joblib.dump(
+    prophet_model,
+    "models/prophet.pkl"
+)

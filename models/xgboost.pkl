@@ -1,0 +1,4 @@
+joblib.dump(
+    model,
+    "models/xgb.pkl"
+)
