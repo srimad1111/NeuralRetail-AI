@@ -12,7 +12,7 @@ from utils import (
 # Sales Dashboard
 def sales_dashboard(df):
 
-    st.header("📈 Sales Analytics")
+    st.header(" Sales Analytics")
 
     st.caption(
         "Analyze sales performance using interactive business dashboards."
@@ -29,22 +29,22 @@ def sales_dashboard(df):
     c1, c2, c3, c4 = st.columns(4)
 
     c1.metric(
-        "🧾 Transactions",
+        " Transactions",
         f"{total_transactions:,}"
     )
 
     c2.metric(
-        "📦 Units Sold",
+        " Units Sold",
         f"{total_quantity:,}"
     )
 
     c3.metric(
-        "💰 Highest Sale",
+        " Highest Sale",
         f"₹ {highest_sale:,.2f}"
     )
 
     c4.metric(
-        "🛒 Average Sale",
+        " Average Sale",
         f"₹ {average_sale:,.2f}"
     )
 

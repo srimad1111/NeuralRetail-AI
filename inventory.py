@@ -6,7 +6,7 @@ import plotly.express as px
 # Inventory Dashboard
 def inventory_dashboard(df):
 
-    st.header("📦 Inventory Optimization")
+    st.header("Inventory Optimization")
 
     st.caption(
         "ABC Analysis and Economic Order Quantity (EOQ)"
@@ -75,7 +75,7 @@ def inventory_dashboard(df):
 
     ] = "B"
 
-    st.subheader("📊 ABC Analysis")
+    st.subheader("ABC Analysis")
 
     fig = px.bar(
 
@@ -121,7 +121,7 @@ def inventory_dashboard(df):
 
 # EOQ CALCULATION
 
-    st.subheader("📦 Economic Order Quantity (EOQ)")
+    st.subheader("Economic Order Quantity (EOQ)")
 
     annual_demand = st.number_input(
 

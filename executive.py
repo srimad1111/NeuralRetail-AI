@@ -13,7 +13,7 @@ from utils import (
 # Executive Dashboard
 def executive_dashboard(df):
 
-    st.header("🏠 Executive Overview")
+    st.header(" Executive Overview")
 
     st.caption(
         "Business performance overview using the Online Retail II dataset."

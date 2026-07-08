@@ -10,7 +10,6 @@ from forecast import forecast_dashboard
 
 st.set_page_config(
     page_title="NeuralRetail AI",
-    page_icon="🛒",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -45,7 +44,7 @@ st.sidebar.markdown("---")
 st.sidebar.caption("NeuralRetail AI v1.0")
 
 
-st.title("🛒 NeuralRetail AI")
+st.title(" NeuralRetail AI")
 st.caption("AI Powered Retail Sales Intelligence Dashboard")
 st.markdown("---")
 
@@ -55,5 +54,5 @@ PAGES[page](df)
 st.markdown("---")
 
 st.caption(
-    "© 2026 NeuralRetail AI | By Srimad Snehashis | Made with ❤️"
+    "© 2026 NeuralRetail AI | Made with ❤️ by Srimad Snehashis |"
 )
