@@ -14,6 +14,30 @@ def load_data():
     return df
 
 
+def kpi_card(title, value, color="#2563EB"):
+    html = f"""
+    <div style="
+        background:#ffffff;
+        border-left:8px solid {color};
+        border-radius:16px;
+        padding:20px;
+        height:150px;
+        box-shadow:0 4px 12px rgba(0,0,0,0.12);
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+    ">
+        <div style="font-size:22px;font-weight:600;color:#6B7280;">
+            {title}
+        </div>
+
+        <div style="font-size:36px;font-weight:700;color:#111827;">
+            {value}
+        </div>
+    </div>
+    """
+    st.html(html)
+
 # Data Cleaning
 def clean_data(df):
 

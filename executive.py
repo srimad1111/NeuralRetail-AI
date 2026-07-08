@@ -1,7 +1,6 @@
-# executive.py
-# Executive Dashboard
 
 import streamlit as st
+from utils import kpi_card
 import plotly.express as px
 
 from utils import (
@@ -31,28 +30,20 @@ def executive_dashboard(df):
     aov = kpi["AOV"]
 
     # KPI Cards
+
     c1, c2, c3, c4 = st.columns(4)
 
-    c1.metric(
-        "💰 Revenue",
-        f"₹ {revenue:,.2f}"
-    )
+    with c1:
+            kpi_card("💰 Revenue", f" {revenue:,.2f}", "#10B981")
 
-    c2.metric(
-        "🧾 Orders",
-        f"{orders:,}"
-    )
+    with c2:
+            kpi_card("🧾 Orders", f"{orders:,}", "#3B82F6")
 
-    c3.metric(
-        "👥 Customers",
-        f"{customers:,}"
-    )
+    with c3:
+            kpi_card("👥 Customers", f"{customers:,}", "#F59E0B")
 
-    c4.metric(
-        "🛒 Avg Order Value",
-        f"₹ {aov:,.2f}"
-    )
-
+    with c4:
+            kpi_card("🛒 Avg Order Value", f"₹ {aov:,.2f}", "#EF4444")
     st.markdown("---")
 
     # Revenue by Country

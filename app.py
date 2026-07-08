@@ -18,6 +18,11 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+import streamlit as st
+
+st.set_page_config(page_title="NeuralRetail AI", layout="wide")
+
+
 
 # Load Dataset
 df = load_data()
@@ -25,8 +30,15 @@ df = clean_data(df)
 
 
 # Sidebar
-st.sidebar.title("🛒 NeuralRetail AI")
-st.sidebar.caption("AI Powered Retail Intelligence")
+
+st.sidebar.image(
+    "assets/logo.png",
+    use_container_width=True
+)
+
+st.sidebar.title("NeuralRetail AI")
+st.sidebar.caption("Retail Intelligence Platform")
+
 
 PAGES = {
     " Executive Overview": executive_dashboard,
